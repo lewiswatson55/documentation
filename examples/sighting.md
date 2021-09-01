@@ -24,3 +24,11 @@ The sighting.json file contains the following data:
 
 Let's go through this line by line to explain it.
 
+## Line 00
+
+Opening brace for the JSON object
+
+## Line 17
+
+Closing brace for the JSON object opened in line 00
+
