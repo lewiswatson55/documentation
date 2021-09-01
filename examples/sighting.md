@@ -1,6 +1,6 @@
 
 
-The sighting.json file contains the following data:
+The example [sighting.json](https://github.com/REMAR-Project/documentation/blob/main/examples/sighting.json) file contains the following data:
 
     00 {
     01     "sightings": [{
@@ -21,8 +21,9 @@ The sighting.json file contains the following data:
     16     }]
     17 }
 
+This has been pretty printed (using jq) and the members of the answer object have been sorted for ease of comprehension.
 
-Let's go through this line by line to explain it.
+Let's go through it line by line and annotate things:
 
 ## Line 00
 
