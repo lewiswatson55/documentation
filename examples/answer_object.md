@@ -4,7 +4,7 @@ The data in the answer object can be broken down into two seperate types. The ba
 
 ## Simple Version:
 
-0. App Version - Float (tbc)
+0. App Version - Float - MUST BE 2.0 - BACKEND WILL DISCARD IF 1.0
    
 1. Basic/Complex Version Index - 0 = Basic Version, 1 = Complex Version
    
@@ -35,7 +35,7 @@ The data in the answer object can be broken down into two seperate types. The ba
 
 ## Complex Version:
 
-0. App Version - Float (tbc)
+0. App Version - Float MUST BE 2.0 - BACKEND WILL DISCARD IF 1.0
    
 1. Basic/Complex Version Index - 0 = Basic Version, 1 = Complex Version
    
