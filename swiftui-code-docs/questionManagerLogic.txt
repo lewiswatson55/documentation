@@ -1,0 +1,47 @@
+
+"questionManager" object in iOS version logic explained. 
+
+It might be helpful to look at the individual files mentioned, they can be found at this link: https://github.com/REMAR-Project/REMAR-iOS-App/tree/main/REMAR-iOS-App/logicLayer
+
+
+questionManager.swift:
+1. The questionManager class manages the state and flow of questions being answered by the user.
+2. It keeps track of the current question, total question count (aka if we are answering the simple or full version of questiohns), and temporary answers.
+3. The class/object has methods to:
+   - Reset the state - basically clear anything saved in the question object, this is used when the user comes out of the question pages and returns to main page OR after submission
+   - Submit answers - Passes off answers and other things like device uuid to submission manager (see below). These could be one object but i did it this way because it is cleaner.
+   - Log answers based on the current question - processes any conversions from temporary/page level answers to the answers stored in the questionManager - eg March -> 3
+   - Clear local cache - this is the cache of answers so we can go forward and back. 
+   - Reverse the last saved answer and move back to the previous question - i.e if the user goes back
+   - Clear all answers - clears the ansers object, different to clear state as this just clears the answers object. see code for clarification.
+4. The Answers class stores the confirmed answers entered by the user.
+
+submissionManager.swift:
+1. The submissionManager class handles the submission of user answers to a server.
+2. The submit method takes the answers, version, deviceID, and an optional bypass string as parameters.
+3. It generates a JSON string based on the provided answers using the generateJSON method.
+4. If the submission fails, it stores the JSON string locally using the storeJSONString method for later retry.
+5. The generateJSON method creates a JSON string in a specific format required by the server API.
+   - It supports two versions of the JSON format: complex (version "1") and basic (default).
+   - The JSON string includes various answer fields such as species, year, month, days, intensity, state, county, protected area, occupation, and additional observations.
+   - Some answer fields are converted to specific formats or indices before being included in the JSON. *IMPORTANT*
+6. The class also includes helper methods to generate specific parts of the JSON string, such as:
+   - generateDaysString: Generates an array of formatted date strings for the selected days.
+   - generateDayString: Generates a formatted date string for a single day.
+   - additionalObservation: Generates a string for the additional observation field.
+   - timeOfDay: Converts the "when" answer to a corresponding index.
+   - yearIndex: Converts the year string to an index.
+   - generateCounty: Generates a string for the county field based on the state and county answers.
+   - protectedArea: Generates a string for the protected area field based on the user's answer.
+   - generateHabitat: Generates a string representing the selected habitats based on the species.
+7. The generateSubmissionDateTime method returns the current date and time in a specific format.
+
+questionsLogic.swift:
+1. This file contains utility functions used by the questionManager and submissionManager classes.
+2. The removeListSelection function removes a target string element from a string array and returns the updated array.
+3. The getMonthIndex function takes a localized month string and returns its corresponding index (0-11).
+
+
+This is the logic for the iOS/SwiftUI implementation of the app. Some functions will be different for flutter, but the resulting JSON (including formatting of data inside) and the overall logic must be the same.
+
+
